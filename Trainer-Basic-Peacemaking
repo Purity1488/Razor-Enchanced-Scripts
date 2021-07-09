@@ -1,4 +1,4 @@
-## Basic Peacemaking Script
+## Basic Peacemaking Script For Sitting At The Bank With!
 instruments = [0xe9e, 0x2805, 0xe9c, 0xeb3, 0xeb1, 0x0eb2, 0x0E9D] #List Of Possible Instruments
 
 Journal.Clear()
