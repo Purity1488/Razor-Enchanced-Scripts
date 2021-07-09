@@ -1,0 +1,16 @@
+## Basic Peacemaking Script
+instruments = [0xe9e, 0x2805, 0xe9c, 0xeb3, 0xeb1, 0x0eb2, 0x0E9D] #List Of Possible Instruments
+
+Journal.Clear()
+Player.UseSkill("Peacemaking")
+Target.WaitForTarget(10000, False)
+
+if Journal.Search("What instrument shall you play?"): #Check to see if instrument is broken and use another.
+    for i in Player.Backpack.Contains:
+        if i.ItemID in instruments:
+            Target.TargetExecute(i) 
+            Journal.Clear()
+            Misc.Pause(200)
+
+Target.TargetExecute(0x815)
+Misc.Pause(12000)     
