@@ -8,6 +8,7 @@
 # Required Adjustments
 AxeSerial = 0x400A59A2  # Set Serial Of Axe That You Have Equipped
 CarpToolUseAtWeight = 250 # Set the Character Weight to turn logs into boards at
+#     ** NOTE - carry whatever carp tool you want, but just dont carry more than one **
 
 # Optional Parameters
 ScanRange = 15
