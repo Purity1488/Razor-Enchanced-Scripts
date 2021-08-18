@@ -6,9 +6,9 @@
 ## next version will include recalling to various locations collecting the logs/boards and coming back to bank em, then setting off again etc..
 
 # Required Adjustments
-AxeSerial = 0x400A59A2  # Set Serial Of Axe That You Have Equipped
-CarpToolUseAtWeight = 250 # Set the Character Weight to turn logs into boards at
-#     ** NOTE - carry whatever carp tool you want, but just dont carry more than one **
+AxeSerial = 0x4012E722  # Set Serial Of Axe That You Have Equipped
+SawSerial = 0x4012E72B # Set Serial Of saw That You Have in backpack
+CarpToolUseAtWeight = 300 # Set the Character Weight to turn logs into boards at
 
 # Optional Parameters
 ScanRange = 15
@@ -30,6 +30,13 @@ treegfx = []
 treenumber = 0
 blockcount = 0
 onloop = True
+
+def EquipAxe():
+    for potentialHatchet in Player.Backpack.Contains:
+        if potentialHatchet.ItemID == 0x0F43:
+            Player.EquipItem(potentialHatchet)
+            Misc.Pause(1000)
+            break                       #Only equip the first hatchet
 
 def RangeTree(locationNumber):
     if (Player.Position.X - 1) == treeposx[locationNumber] and (Player.Position.Y + 1) == treeposy[locationNumber]:
@@ -106,23 +113,28 @@ def CutTree(locationNumber):
         Misc.NoOperation()  
         
     if (Player.Weight >= CarpToolUseAtWeight):
-        for i in Player.Backpack.Contains:
-            if i.ItemID in CarpTools:
-                Items.UseItem(i)
-                Gumps.WaitForGump(1881863462, 10000)
-                Gumps.SendAction(1881863462, 1)
-                Gumps.WaitForGump(1881863462, 10000)
-                Gumps.SendAction(1881863462, 2)
-                Gumps.WaitForGump(1881863462, 10000)
-                Gumps.SendAction(1881863462, 0)
+        Items.UseItem(SawSerial)
+        Gumps.WaitForGump(1891859459, 10000)
+        Misc.Pause(2000)
+        Gumps.SendAction(1891859459, 21)
+        
+        
 
     else:
         Misc.NoOperation()
         
     
     Journal.Clear()
+    #original code
     axe = Items.FindBySerial(AxeSerial)
     Items.UseItem(axe)
+    
+    #try and grab an any hatchet
+    #EquipAxe()
+    #axe = Items.FindBySerial(potentialHatchet)
+    #Items.UseItem(axe)
+    #
+    
     Target.WaitForTarget(TimeoutOnWaitAction)
     Target.TargetExecute(treeposx[locationNumber], treeposy[locationNumber], treeposz[locationNumber], treegfx[locationNumber])
     Misc.Pause(ChopDelay)
